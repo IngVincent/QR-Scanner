@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      Ionic QR Scanner
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content>
+  <!-- Volver -->
+  <input #fileinput type="file" accept="image/*;capture=camera" hidden (change)="handleFile($event.target.files)">
+ 
+  <!-- Activar la entrada del imagen -->
+  <ion-button expand="full" (click)="captureImage()">
+    <ion-icon slot="start" name="camera"></ion-icon>
+    Cargar Imagen
+  </ion-button>
+ 
+  <ion-button expand="full" (click)="startScan()">
+    <ion-icon slot="start" name="qr-code-outline"></ion-icon>
+    Iniciar Escaneo
+  </ion-button>
+ 
+  <ion-button expand="full" (click)="reset()" color="warning" *ngIf="scanResult">
+    <ion-icon slot="start" name="refresh"></ion-icon>
+    Reset
+  </ion-button>
+ 
+  <!-- Mostrar camara en tiempo Real -->
+  <video #video [hidden]="!scanActive" width="100%"></video>
+ 
+  <!-- Renderizar las imagenes del Stream -->
+  <canvas #canvas hidden></canvas>
+ 
+  <!-- Detiene la vista previa del escaner sí esta activo -->
+  <ion-button expand="full" (click)="stopScan()" color="danger" *ngIf="scanActive">
+    <ion-icon slot="start" name="close"></ion-icon>
+    Detener Escaneo
+  </ion-button>
+ 
+  <ion-card *ngIf="scanResult">
+    <ion-card-header>
+      <ion-card-title>Codigo QR</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{ scanResult }}
+    </ion-card-content>
+  </ion-card>
+ 
+</ion-content>
